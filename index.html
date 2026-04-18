@@ -737,9 +737,12 @@ async function loadData() {
     return;
   }
   try {
-    const res = await fetch(`${SCRIPT_URL}?action=getAll`);
+    const res = await fetch(SCRIPT_URL, {
+      method: "GET",
+      redirect: "follow"
+    });
     const data = await res.json();
-    allPlayers = data;
+    allPlayers = Array.isArray(data) ? data : [];
     filteredPlayers = [...allPlayers];
     renderTable();
     updateStats();
